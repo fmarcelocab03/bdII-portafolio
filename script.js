@@ -52,10 +52,22 @@ let esAdmin = false;
     return;
   }
 
-  const unidades = unidadesData.map(u => ({
+  // Ordenar unidades por ID (u1, u2, u3, u4)
+const ordenUnidades = ['u1', 'u2', 'u3', 'u4'];
+const unidadesOrdenadas = [...unidadesData].sort((a, b) => {
+  return ordenUnidades.indexOf(a.id) - ordenUnidades.indexOf(b.id);
+});
+
+const unidades = unidadesOrdenadas.map(u => ({
     ...u,
     semanas: semanasData
       .filter(s => s.unidad_id === u.id)
+      // ORDENAR semanas numéricamente: semana1, semana2... semana16
+      .sort((a, b) => {
+        const numA = parseInt(a.id.replace('semana', ''));
+        const numB = parseInt(b.id.replace('semana', ''));
+        return numA - numB;
+      })
       .map(s => ({
         ...s,
         archivos: archivosData.filter(a => a.semana_id === s.id)
