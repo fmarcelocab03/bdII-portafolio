@@ -849,187 +849,193 @@ iniciarApp();
 
 
     function abrirModalPorSemana(semana) {
-      const tieneArchivos = Array.isArray(semana.archivos) && semana.archivos.length > 0;
-      const primerArchivo = tieneArchivos ? semana.archivos[0] : null;
+  const tieneArchivos = Array.isArray(semana.archivos) && semana.archivos.length > 0;
+  const primerArchivo = tieneArchivos ? semana.archivos[0] : null;
 
-      previousActiveElement = document.activeElement;
+  previousActiveElement = document.activeElement;
 
-      const modalContent = document.createElement("div");
-      modalContent.className = "modal-content";
-      modalContent.setAttribute("role", "dialog");
-      modalContent.setAttribute("aria-modal", "true");
-      modalContent.setAttribute("aria-label", semana.label);
+  const modalContent = document.createElement("div");
+  modalContent.className = "modal-content";
+  modalContent.setAttribute("role", "dialog");
+  modalContent.setAttribute("aria-modal", "true");
+  modalContent.setAttribute("aria-label", semana.label);
 
-      const top = document.createElement("div");
-      top.className = "modal-top";
-      const info = document.createElement("div");
-      const title = document.createElement("div");
-      title.className = "modal-tarea-title";
-      title.textContent = semana.label;
-      const desc = document.createElement("div");
-      desc.className = "modal-tarea-desc";
-      desc.style.color = "var(--text-main)";
-      desc.style.fontSize = "0.95rem";
-      desc.textContent = semana.descripcion || "";
-      info.appendChild(title);
-      info.appendChild(desc);
+  const top = document.createElement("div");
+  top.className = "modal-top";
+  const info = document.createElement("div");
+  const title = document.createElement("div");
+  title.className = "modal-tarea-title";
+  title.textContent = semana.label;
+  const desc = document.createElement("div");
+  desc.className = "modal-tarea-desc";
+  desc.style.color = "var(--text-main)";
+  desc.style.fontSize = "0.95rem";
+  desc.textContent = semana.descripcion || "";
+  info.appendChild(title);
+  info.appendChild(desc);
 
-      const topRight = document.createElement("div");
-      const volverBtn = document.createElement("button");
-      volverBtn.className = "volver-btn";
-      volverBtn.type = "button";
-      volverBtn.textContent = "⟵ Volver";
-      volverBtn.addEventListener("click", closeModal);
-      topRight.appendChild(volverBtn);
+  const topRight = document.createElement("div");
+  const volverBtn = document.createElement("button");
+  volverBtn.className = "volver-btn";
+  volverBtn.type = "button";
+  volverBtn.textContent = "⟵ Volver";
+  volverBtn.addEventListener("click", closeModal);
+  topRight.appendChild(volverBtn);
 
-      top.appendChild(info);
-      top.appendChild(topRight);
+  top.appendChild(info);
+  top.appendChild(topRight);
 
-      const body = document.createElement("div");
-      body.className = "modal-body";
+  const body = document.createElement("div");
+  body.className = "modal-body";
 
-      const filesCol = document.createElement("div");
-      filesCol.className = "modal-files";
-      filesCol.id = "modal-files";
-      const h3 = document.createElement("h3");
-      h3.textContent = "Archivos";
-      filesCol.appendChild(h3);
+  const filesCol = document.createElement("div");
+  filesCol.className = "modal-files";
+  filesCol.id = "modal-files";
+  const h3 = document.createElement("h3");
+  h3.textContent = "Archivos";
+  filesCol.appendChild(h3);
 
-      if (tieneArchivos) {
-        semana.archivos.forEach((a, i) => {
-          // Contenedor para el archivo + botones admin
-          const fileContainer = document.createElement("div");
-          fileContainer.style.cssText = 'display:flex; align-items:center; gap:6px; margin-bottom:4px;';
-          
-          // Botón principal del archivo
-          const btn = document.createElement("button");
-          btn.className = "file-item";
-          btn.type = "button";
-          btn.setAttribute("data-file-index", String(i));
-          btn.textContent = `📎 ${a.nombre}`;
-          btn.style.flex = '1';
-          btn.addEventListener("click", function () {
-            filesCol.querySelectorAll(".file-item").forEach(b => b.classList.remove("activo"));
-            btn.classList.add("activo");
-            const viewerArea = modalContent.querySelector("#viewer-area");
-            viewerArea.innerHTML = "";
-            viewerArea.appendChild(crearViewerElemento(a));
-            const abrir = modalContent.querySelector(".abrir-pdf-btn");
-            if (abrir) abrir.href = a.enlace || "#";
-          });
-          
-          fileContainer.appendChild(btn);
-          
-          // Si es admin, agregar botones de editar/eliminar archivo
-          if (esAdmin) {
-            // Botón Editar Archivo
-            const btnEditarArchivo = document.createElement("button");
-            btnEditarArchivo.className = "admin-btn editar-btn";
-            btnEditarArchivo.title = "Editar archivo";
-            btnEditarArchivo.innerHTML = "✏️";
-            btnEditarArchivo.style.cssText = 'padding:4px 8px; font-size:12px; min-width:28px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(96,165,250,0.15); color:#60a5fa; border:1px solid rgba(96,165,250,0.3); border-radius:6px;';
-            btnEditarArchivo.onclick = (e) => {
-              e.stopPropagation();
-              editarArchivo(a.id, a.nombre);
-            };
-            
-            // Botón Eliminar Archivo
-            const btnEliminarArchivo = document.createElement("button");
-            btnEliminarArchivo.className = "admin-btn eliminar-btn";
-            btnEliminarArchivo.title = "Eliminar archivo";
-            btnEliminarArchivo.innerHTML = "🗑️";
-            btnEliminarArchivo.style.cssText = 'padding:4px 8px; font-size:12px; min-width:28px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(248,113,113,0.15); color:#f87171; border:1px solid rgba(248,113,113,0.3); border-radius:6px;';
-            btnEliminarArchivo.onclick = (e) => {
-              e.stopPropagation();
-              eliminarArchivo(a.id, a.enlace);
-            };
-            
-            fileContainer.appendChild(btnEditarArchivo);
-            fileContainer.appendChild(btnEliminarArchivo);
-          }
-          
-          filesCol.appendChild(fileContainer);
-        });
-      } else {
-        const empty = document.createElement("div");
-        empty.style.padding = "0.8rem";
-        empty.style.color = "#555";
-        empty.style.textAlign = "center";
-        empty.textContent = "No hay archivos.";
-        filesCol.appendChild(empty);
+  if (tieneArchivos) {
+    semana.archivos.forEach((a, i) => {
+      // Contenedor para el archivo + botones admin
+      const fileContainer = document.createElement("div");
+      fileContainer.style.cssText = 'display:flex; align-items:center; gap:6px; margin-bottom:4px;';
+      
+      // Botón principal del archivo
+      const btn = document.createElement("button");
+      btn.className = "file-item";
+      btn.type = "button";
+      btn.setAttribute("data-file-index", String(i));
+      btn.textContent = `📎 ${a.nombre}`;
+      btn.style.flex = '1';
+      btn.addEventListener("click", function () {
+        filesCol.querySelectorAll(".file-item").forEach(b => b.classList.remove("activo"));
+        btn.classList.add("activo");
+        const viewerArea = modalContent.querySelector("#viewer-area");
+        viewerArea.innerHTML = "";
+        viewerArea.appendChild(crearViewerElemento(a));
+        const abrir = modalContent.querySelector(".abrir-pdf-btn");
+        if (abrir) abrir.href = a.enlace || "#";
+      });
+      
+      fileContainer.appendChild(btn);
+      
+      // Si es admin, agregar botones de editar/eliminar archivo
+      if (esAdmin) {
+        // Botón Editar Archivo
+        const btnEditarArchivo = document.createElement("button");
+        btnEditarArchivo.className = "admin-btn editar-btn";
+        btnEditarArchivo.title = "Editar archivo";
+        btnEditarArchivo.innerHTML = "✏️";
+        btnEditarArchivo.style.cssText = 'padding:4px 8px; font-size:12px; min-width:28px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(96,165,250,0.15); color:#60a5fa; border:1px solid rgba(96,165,250,0.3); border-radius:6px;';
+        btnEditarArchivo.onclick = (e) => {
+          e.stopPropagation();
+          editarArchivo(a.id, a.nombre);
+        };
+        
+        // Botón Eliminar Archivo
+        const btnEliminarArchivo = document.createElement("button");
+        btnEliminarArchivo.className = "admin-btn eliminar-btn";
+        btnEliminarArchivo.title = "Eliminar archivo";
+        btnEliminarArchivo.innerHTML = "🗑️";
+        btnEliminarArchivo.style.cssText = 'padding:4px 8px; font-size:12px; min-width:28px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(248,113,113,0.15); color:#f87171; border:1px solid rgba(248,113,113,0.3); border-radius:6px;';
+        btnEliminarArchivo.onclick = (e) => {
+          e.stopPropagation();
+          eliminarArchivo(a.id, a.enlace);
+        };
+        
+        fileContainer.appendChild(btnEditarArchivo);
+        fileContainer.appendChild(btnEliminarArchivo);
       }
+      
+      filesCol.appendChild(fileContainer);
+    });
+  } else {
+    const empty = document.createElement("div");
+    empty.style.padding = "0.8rem";
+    empty.style.color = "#555";
+    empty.style.textAlign = "center";
+    empty.textContent = "No hay archivos.";
+    filesCol.appendChild(empty);
+  }
 
-      const viewerCol = document.createElement("div");
-      viewerCol.className = "modal-viewer";
-      const viewerArea = document.createElement("div");
-      viewerArea.className = "viewer-area";
-      viewerArea.id = "viewer-area";
+  const viewerCol = document.createElement("div");
+  viewerCol.className = "modal-viewer";
+  const viewerArea = document.createElement("div");
+  viewerArea.className = "viewer-area";
+  viewerArea.id = "viewer-area";
 
-      if (primerArchivo) viewerArea.appendChild(crearViewerElemento(primerArchivo));
-      else {
-        const sel = document.createElement("div");
-        sel.style.padding = "1rem";
-        sel.style.color = "#555";
-        sel.textContent = "Selecciona un archivo";
-        viewerArea.appendChild(sel);
-      }
+  if (primerArchivo) viewerArea.appendChild(crearViewerElemento(primerArchivo));
+  else {
+    const sel = document.createElement("div");
+    sel.style.padding = "1rem";
+    sel.style.color = "#555";
+    sel.textContent = "Selecciona un archivo";
+    viewerArea.appendChild(sel);
+  }
 
-      const viewerBottom = document.createElement("div");
-      viewerBottom.className = "viewer-bottom";
+  const viewerBottom = document.createElement("div");
+  viewerBottom.className = "viewer-bottom";
 
+  const leftGroup = document.createElement("div");
+  if (primerArchivo) {
+    const abrirLink = document.createElement("a");
+    abrirLink.className = "abrir-pdf-btn";
+    abrirLink.href = primerArchivo.enlace || "#";
+    abrirLink.target = "_blank";
+    abrirLink.rel = "noopener";
+    abrirLink.textContent = "🔗 Abrir en nueva pestaña";
+    leftGroup.appendChild(abrirLink);
+  }
 
-      const leftGroup = document.createElement("div");
-      if (primerArchivo) {
-        const abrirLink = document.createElement("a");
-        abrirLink.className = "abrir-pdf-btn";
-        abrirLink.href = primerArchivo.enlace || "#";
-        abrirLink.target = "_blank";
-        abrirLink.rel = "noopener";
-        abrirLink.textContent = "🔗 Abrir en nueva pestaña";
-        leftGroup.appendChild(abrirLink);
-      }
+  const rightGroup = document.createElement("div");
+  
+  // 🔥 CAMBIO IMPORTANTE: Ahora es botón de Google Drive
+  const driveBtn = document.createElement("a");
+  driveBtn.className = "abrir-github-btn"; // Mantenemos la clase por estilo
+  driveBtn.href = "https://drive.google.com/drive/folders/1mjV8biK5kdKaSH9gXGSAmj3tj36HmEq6?usp=sharing";
+  driveBtn.target = "_blank";
+  driveBtn.rel = "noopener";
+  driveBtn.textContent = "📁 Repositorio Google Drive";
+  
+  // Cambiamos el ícono y texto para reflejar Google Drive
+  driveBtn.style.display = "inline-flex";
+  driveBtn.style.alignItems = "center";
+  driveBtn.style.gap = "8px";
+  
+  rightGroup.appendChild(driveBtn);
 
+  viewerBottom.appendChild(leftGroup);
+  viewerBottom.appendChild(rightGroup);
 
-      const rightGroup = document.createElement("div");
-      const githubBtn = document.createElement("a");
-      githubBtn.className = "abrir-github-btn";
-      githubBtn.href = GITHUB_REPO_URL;
-      githubBtn.target = "_blank";
-      githubBtn.rel = "noopener";
-      githubBtn.textContent = "Repositorio GitHub";
-      rightGroup.appendChild(githubBtn);
+  viewerCol.appendChild(viewerArea);
+  viewerCol.appendChild(viewerBottom);
 
-      viewerBottom.appendChild(leftGroup);
-      viewerBottom.appendChild(rightGroup);
+  body.appendChild(filesCol);
+  body.appendChild(viewerCol);
 
-      viewerCol.appendChild(viewerArea);
-      viewerCol.appendChild(viewerBottom);
+  modalContent.appendChild(top);
+  modalContent.appendChild(body);
 
-      body.appendChild(filesCol);
-      body.appendChild(viewerCol);
+  modal.innerHTML = "";
+  modal.appendChild(modalContent);
+  modal.classList.add("mostrar");
+  modal.setAttribute("aria-hidden", "false");
+  disableBodyScroll();
 
-      modalContent.appendChild(top);
-      modalContent.appendChild(body);
+  const fileButtons = filesCol.querySelectorAll(".file-item");
+  if (fileButtons.length) fileButtons[0].classList.add("activo");
 
-      modal.innerHTML = "";
-      modal.appendChild(modalContent);
-      modal.classList.add("mostrar");
-      modal.setAttribute("aria-hidden", "false");
-      disableBodyScroll();
+  enableArrowNavigation(filesCol);
+  trapFocus(modalContent);
 
-      const fileButtons = filesCol.querySelectorAll(".file-item");
-      if (fileButtons.length) fileButtons[0].classList.add("activo");
+  escHandler = function (e) { if (e.key === "Escape") closeModal(); };
+  document.addEventListener("keydown", escHandler);
 
-      enableArrowNavigation(filesCol);
-      trapFocus(modalContent);
-
-      escHandler = function (e) { if (e.key === "Escape") closeModal(); };
-      document.addEventListener("keydown", escHandler);
-
-      modal.addEventListener("click", function onOutsideClick(e) {
-        if (e.target === modal) closeModal();
-      }, { once: true });
-    }
+  modal.addEventListener("click", function onOutsideClick(e) {
+    if (e.target === modal) closeModal();
+  }, { once: true });
+}
 
 
     document.addEventListener("keydown", function (e) {
