@@ -776,6 +776,62 @@ function renderAdminSemanas() {
 
   panel.innerHTML += html;
 }
+    // ========== EDITAR Y ELIMINAR ARCHIVOS ==========
+
+window.editarArchivo = async function(id, nombreActual) {
+  const nuevoNombre = prompt("Editar nombre del archivo:", nombreActual);
+  
+  if (!nuevoNombre || nuevoNombre.trim() === '') {
+    return;
+  }
+  
+  const { error } = await supabaseClient
+    .from("archivos")
+    .update({ nombre: nuevoNombre.trim() })
+    .eq("id", id);
+  
+  if (error) {
+    alert("❌ Error al editar: " + error.message);
+  } else {
+    alert("✅ Archivo actualizado correctamente");
+    cargarDatos();
+  }
+};
+
+window.eliminarArchivo = async function(id, archivoEnlace) {
+  const confirmar = confirm("⚠️ ¿Estás seguro de eliminar este archivo?\n\nEsta acción NO se puede deshacer.");
+  
+  if (!confirmar) return;
+  
+  try {
+    // Intentar eliminar del storage
+    if (archivoEnlace) {
+      const urlPartes = archivoEnlace.split('/');
+      const nombreArchivo = urlPartes[urlPartes.length - 1];
+      
+      if (nombreArchivo) {
+        await supabaseClient.storage
+          .from('archivos')
+          .remove([nombreArchivo]);
+      }
+    }
+    
+    // Eliminar de la base de datos
+    const { error } = await supabaseClient
+      .from("archivos")
+      .delete()
+      .eq("id", id);
+    
+    if (error) {
+      alert("❌ Error al eliminar: " + error.message);
+    } else {
+      alert("✅ Archivo eliminado correctamente");
+      cargarDatos();
+    }
+  } catch (error) {
+    alert("❌ Error: " + error.message);
+  }
+};
 iniciarApp();
     function closeModal() {
       if (!modal.classList.contains("mostrar")) return;
@@ -841,11 +897,17 @@ iniciarApp();
 
       if (tieneArchivos) {
         semana.archivos.forEach((a, i) => {
+          // Contenedor para el archivo + botones admin
+          const fileContainer = document.createElement("div");
+          fileContainer.style.cssText = 'display:flex; align-items:center; gap:6px; margin-bottom:4px;';
+          
+          // Botón principal del archivo
           const btn = document.createElement("button");
           btn.className = "file-item";
           btn.type = "button";
           btn.setAttribute("data-file-index", String(i));
-          btn.textContent = a.nombre;
+          btn.textContent = `📎 ${a.nombre}`;
+          btn.style.flex = '1';
           btn.addEventListener("click", function () {
             filesCol.querySelectorAll(".file-item").forEach(b => b.classList.remove("activo"));
             btn.classList.add("activo");
@@ -855,7 +917,38 @@ iniciarApp();
             const abrir = modalContent.querySelector(".abrir-pdf-btn");
             if (abrir) abrir.href = a.enlace || "#";
           });
-          filesCol.appendChild(btn);
+          
+          fileContainer.appendChild(btn);
+          
+          // Si es admin, agregar botones de editar/eliminar archivo
+          if (esAdmin) {
+            // Botón Editar Archivo
+            const btnEditarArchivo = document.createElement("button");
+            btnEditarArchivo.className = "admin-btn editar-btn";
+            btnEditarArchivo.title = "Editar archivo";
+            btnEditarArchivo.innerHTML = "✏️";
+            btnEditarArchivo.style.cssText = 'padding:4px 8px; font-size:12px; min-width:28px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(96,165,250,0.15); color:#60a5fa; border:1px solid rgba(96,165,250,0.3); border-radius:6px;';
+            btnEditarArchivo.onclick = (e) => {
+              e.stopPropagation();
+              editarArchivo(a.id, a.nombre);
+            };
+            
+            // Botón Eliminar Archivo
+            const btnEliminarArchivo = document.createElement("button");
+            btnEliminarArchivo.className = "admin-btn eliminar-btn";
+            btnEliminarArchivo.title = "Eliminar archivo";
+            btnEliminarArchivo.innerHTML = "🗑️";
+            btnEliminarArchivo.style.cssText = 'padding:4px 8px; font-size:12px; min-width:28px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(248,113,113,0.15); color:#f87171; border:1px solid rgba(248,113,113,0.3); border-radius:6px;';
+            btnEliminarArchivo.onclick = (e) => {
+              e.stopPropagation();
+              eliminarArchivo(a.id, a.enlace);
+            };
+            
+            fileContainer.appendChild(btnEditarArchivo);
+            fileContainer.appendChild(btnEliminarArchivo);
+          }
+          
+          filesCol.appendChild(fileContainer);
         });
       } else {
         const empty = document.createElement("div");
