@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Repositorio Académico - </title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-container">
+      <img src="logo.png" alt="Logo Repositorio Académico" class="header-logo" />
+      <div class="header-text">
+        <h1>Repositorio Académico</h1>
+        <h2>Universidad Peruana Los Andes</h2>
+        <p>Seguimiento de tareas semanales</p>
+      </div>
+      <div class="header-actions">
+        <button id="admin-btn" onclick="toggleAdminLogin()">Admin</button>
+        <button id="logout-btn" onclick="logoutAdmin()" style="display:none;">
+  Salir
+</button>
+      </div>
+    </div>
+    
+  </header>
+
+  <aside id="sidebar" class="site-sidebar" role="complementary" aria-label="Navegación secundaria">
+    <nav role="navigation" aria-label="Índice de la página">
+      <ul>
+        <li><a href="#info-title">Información del Estudiante</a></li>
+        <li><a href="#semanas">Tareas por Semana</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+    <section class="info-estudiante" aria-labelledby="info-title">
+    <h2 id="info-title"><span class="info-icon" aria-hidden="true">👤</span> Información del Estudiante</h2>
+    
+    <!-- NUEVO: Contenedor flex para foto y descripción -->
+    <div class="perfil-estudiante-container">
+      <div class="foto-perfil-wrapper">
+        <!-- CAMBIA ESTO por la ruta de tu foto. Ejemplo: src="img/foto.jpg" -->
+        <img src="img/perfil-placeholder.png" alt="Foto de perfil de Fernando Marcelo Caballero" class="foto-perfil-img">
+      </div>
+      <div class="descripcion-perfil">
+        <h3>Sobre mí</h3>
+        <p>
+          Estudiante de Ingeniería de Sistemas con gran interés en el desarrollo de software, 
+          la gestión de bases de datos y las nuevas tecnologías. Me considero una persona 
+          proactiva, con capacidad para trabajar en equipo y siempre en busca de nuevos retos 
+          que me permitan crecer profesional y académicamente. Mi objetivo es aplicar mis 
+          conocimientos para crear soluciones tecnológicas innovadoras y eficientes.
+        </p>
+      </div>
+    </div>
+    <!-- FIN NUEVO CONTENIDO -->
+
+    <ul class="datos-estudiante">
+      <li><strong>Nombre:</strong> Fernando Marcelo Caballero</li>
+      <li><strong>Código:</strong> S03799G</li>
+      <li><strong>Carrera:</strong> Ingeniería de Sistemas y Computación</li>
+      <li><strong>Correo:</strong>
+        <a href="mailto:s03799g@ms.upla.edu.pe">s03799g@ms.upla.edu.pe</a>
+      </li>
+    </ul>
+  </section>
+
+  <main id="main-content" role="main" aria-labelledby="semanas-title">
+    <h2 id="semanas-title"><span class="semanas-icon" aria-hidden="true">📅</span> Tareas por Semana</h2>
+    <div id="contenedor-semanas" aria-live="polite"></div>
+  </main>
+  <!-- PANEL DE ADMINISTRACIÓN FLOTANTE INTELIGENTE -->
+<div id="admin-panel" class="admin-flotante" style="display:none;">
+  <div class="admin-header">
+    <h3>⚙️ Panel Admin Inteligente</h3>
+    <button class="admin-toggle-btn" onclick="toggleAdminCollapse()" title="Minimizar/Maximizar">
+      <span id="admin-toggle-icon">▼</span>
+    </button>
+  </div>
+  
+  <div id="admin-content" class="admin-content">
+    
+    <!-- SECCIÓN: CREAR UNIDAD -->
+    <div class="admin-seccion">
+      <h4>📦 Crear Nueva Unidad</h4>
+      <div class="input-grupo">
+        <label>ID de Unidad:</label>
+        <input type="text" id="unidad_id" placeholder="Ej: u5">
+      </div>
+      <div class="input-grupo">
+        <label>Nombre de Unidad:</label>
+        <input type="text" id="unidad_nombre" placeholder="Ej: Unidad 5 - Proyecto Final">
+      </div>
+      <button onclick="crearUnidad()" class="admin-btn-primary">✨ Crear Unidad</button>
+    </div>
+
+    <hr>
+
+    <!-- SECCIÓN: CREAR SEMANA (AUTOMÁTICA) -->
+    <div class="admin-seccion">
+      <h4>📅 Crear Nueva Semana <span class="badge-automatico">AUTO</span></h4>
+      <div class="input-grupo">
+        <label>Número de Semana:</label>
+        <input type="number" id="numero_semana" placeholder="Ej: 5" min="1" max="16" onchange="previsualizarSemana()" oninput="previsualizarSemana()">
+      </div>
+      <div class="input-grupo">
+        <label>Descripción de la Semana:</label>
+        <input type="text" id="descripcion_semana" placeholder="Ej: Modelo Relacional">
+      </div>
+      <div class="preview-info" id="preview-semana" style="display:none;">
+        <p>📌 <strong>ID generado:</strong> <span id="preview-id"></span></p>
+        <p>📘 <strong>Unidad asignada:</strong> <span id="preview-unidad"></span></p>
+        <p>🏷️ <strong>Etiqueta:</strong> <span id="preview-label"></span></p>
+      </div>
+      <button onclick="crearSemanaAuto()" class="admin-btn-primary">✨ Crear Semana</button>
+    </div>
+
+    <hr>
+
+    <!-- SECCIÓN: SUBIR ARCHIVO (SIMPLIFICADO) -->
+    <div class="admin-seccion">
+      <h4>📤 Subir Archivo a Semana</h4>
+      <div class="input-grupo">
+        <label>Semana destino (número):</label>
+        <input type="number" id="semana_destino" placeholder="Ej: 5" min="1" max="16" onchange="mostrarInfoSemana()" oninput="mostrarInfoSemana()">
+      </div>
+      <div class="input-grupo">
+        <label>Nombre del trabajo:</label>
+        <input type="text" id="nombre_archivo" placeholder="Ej: Tarea 1 - Modelo ER">
+      </div>
+      <div class="input-grupo">
+        <label>Seleccionar archivo:</label>
+        <input type="file" id="file_input">
+      </div>
+      <div class="preview-info" id="preview-archivo" style="display:none;">
+        <p>📌 <strong>ID de semana:</strong> <span id="preview-semana-id"></span></p>
+        <p>📘 <strong>Unidad destino:</strong> <span id="preview-unidad-destino"></span></p>
+      </div>
+      <button onclick="subirArchivoAuto()" class="admin-btn-primary">✨ Subir Archivo</button>
+    </div>
+
+    <hr>
+
+    <!-- INFORMACIÓN DE ESTRUCTURA -->
+    <div class="admin-seccion info-estructura">
+      <h4>📋 Estructura del Curso</h4>
+      <div class="estructura-grid">
+        <div class="unidad-info"><strong>U1:</strong> Semanas 1-4</div>
+        <div class="unidad-info"><strong>U2:</strong> Semanas 5-8</div>
+        <div class="unidad-info"><strong>U3:</strong> Semanas 9-12</div>
+        <div class="unidad-info"><strong>U4:</strong> Semanas 13-16</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL (IMPORTANTE) -->
+<div id="modal-tarea" class="modal-tarea" aria-hidden="true"></div>
+  <div id="admin-login-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:#fff; padding:20px; border-radius:10px; width:300px;">
+    <h3>Login Admin</h3>
+    <input type="text" id="admin-user" placeholder="Usuario"><br><br>
+    <input type="password" id="admin-pass" placeholder="Contraseña"><br><br>
+    <button onclick="loginAdmin()">Entrar</button>
+    <button onclick="cerrarModalAdmin()">Cancelar</button>
+  </div>
+  </div>
+  <footer role="contentinfo">
+    <p>© <span id="footer-year"></span> Universidad Peruana Los Andes - Repositorio de Tareas</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
