@@ -852,6 +852,26 @@ iniciarApp();
   const tieneArchivos = Array.isArray(semana.archivos) && semana.archivos.length > 0;
   const primerArchivo = tieneArchivos ? semana.archivos[0] : null;
 
+  // Extraer el número de semana del label (ejemplo: "Semana 1" -> 1)
+  let numeroSemana = 1;
+  if (semana.label) {
+    const match = semana.label.match(/\d+/);
+    if (match) {
+      numeroSemana = parseInt(match[0]);
+    }
+  }
+
+  // Definir los links de Google Drive según la semana
+  const linksPorSemana = {
+    1: "https://drive.google.com/drive/folders/1G6f40zyJtxueUgPLsUBwifI40y3xoJGz?usp=sharing",
+    2: "https://drive.google.com/drive/folders/1Xx69LoFC6bNmQUCyQcKJwQnO5EsWoG9X?usp=sharing",
+    3: "https://drive.google.com/drive/folders/1oGDUUcdaBwnJ1gvAW7-vk3yoEZ_JJ_dP?usp=sharing",
+    4: "https://drive.google.com/drive/folders/1yrbjmXnAsTUU9PfwxWn1O5O6eVPze0JF?usp=sharing"
+  };
+
+  // Obtener el link correspondiente o usar un link por defecto
+  const googleDriveLink = linksPorSemana[numeroSemana] || "https://drive.google.com/drive/folders/1mjV8biK5kdKaSH9gXGSAmj3tj36HmEq6?usp=sharing";
+
   previousActiveElement = document.activeElement;
 
   const modalContent = document.createElement("div");
@@ -990,15 +1010,14 @@ iniciarApp();
 
   const rightGroup = document.createElement("div");
   
-  // 🔥 CAMBIO IMPORTANTE: Ahora es botón de Google Drive
+  // 🔥 BOTÓN DE GOOGLE DRIVE CON ENLACE ESPECÍFICO POR SEMANA
   const driveBtn = document.createElement("a");
-  driveBtn.className = "abrir-github-btn"; // Mantenemos la clase por estilo
-  driveBtn.href = "https://drive.google.com/drive/folders/1mjV8biK5kdKaSH9gXGSAmj3tj36HmEq6?usp=sharing";
+  driveBtn.className = "abrir-github-btn";
+  driveBtn.href = googleDriveLink;  // Usar el link específico según la semana
   driveBtn.target = "_blank";
   driveBtn.rel = "noopener";
-  driveBtn.textContent = "📁 Repositorio Google Drive";
+  driveBtn.textContent = `📁 Repositorio Semana ${numeroSemana} (Google Drive)`;
   
-  // Cambiamos el ícono y texto para reflejar Google Drive
   driveBtn.style.display = "inline-flex";
   driveBtn.style.alignItems = "center";
   driveBtn.style.gap = "8px";
