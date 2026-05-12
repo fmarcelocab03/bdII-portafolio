@@ -874,8 +874,9 @@ iniciarApp();
     1: "https://drive.google.com/drive/folders/1G6f40zyJtxueUgPLsUBwifI40y3xoJGz?usp=sharing",
     2: "https://drive.google.com/drive/folders/1Xx69LoFC6bNmQUCyQcKJwQnO5EsWoG9X?usp=sharing",
     3: "https://drive.google.com/drive/folders/1oGDUUcdaBwnJ1gvAW7-vk3yoEZ_JJ_dP?usp=sharing",
-    4: "https://drive.google.com/drive/folders/1yrbjmXnAsTUU9PfwxWn1O5O6eVPze0JF?usp=sharing"
-  };
+    4: "https://drive.google.com/drive/folders/1yrbjmXnAsTUU9PfwxWn1O5O6eVPze0JF?usp=sharing",
+    5: "https://drive.google.com/drive/folders/1xuX-lcrToGyszMA4N04bO9_0GXkvrClR?usp=sharing"
+};
 
   // Obtener el link correspondiente o usar un link por defecto
   const googleDriveLink = linksPorSemana[numeroSemana] || "https://drive.google.com/drive/folders/1mjV8biK5kdKaSH9gXGSAmj3tj36HmEq6?usp=sharing";
