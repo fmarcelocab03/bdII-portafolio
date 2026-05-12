@@ -412,7 +412,15 @@ window.subirArchivoAuto = async function () {
   }
   
   const semanaId = `semana${numSemana}`;
-  const fileName = Date.now() + '_' + file.name;
+  // Sanitizar el nombre del archivo: eliminar caracteres especiales y espacios
+let nombreLimpio = file.name
+  .replace(/\s+/g, '_')           // Reemplazar espacios por guiones bajos
+  .replace(/[áéíóú]/gi, 'a')      // Quitar acentos
+  .replace(/ñ/gi, 'n')            // Reemplazar ñ
+  .replace(/[^a-zA-Z0-9._-]/g, '') // Eliminar cualquier otro carácter especial
+  .toLowerCase();                  // Convertir a minúsculas
+
+const fileName = Date.now() + '_' + nombreLimpio;
   
   // Generar un ID único para el archivo
   const idUnico = Date.now();
