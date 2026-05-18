@@ -1206,3 +1206,83 @@ footer { margin-left: var(--sidebar-width); padding: 1.5rem; background: var(--f
   .modal-body { flex-direction: column; }
   .modal-files { width: 100%; height: 200px; }
 }
+/* ============================================== */
+/* SOLUCIÓN: TAMAÑO UNIFORME DE TARJETAS DE UNIDAD */
+/* ============================================== */
+
+/* Contenedor principal de todas las unidades */
+#contenedor-semanas {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Grid de semanas dentro de cada unidad */
+.grid-semanas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas fijas */
+  gap: 1.2rem;
+  padding: 0.5rem;
+}
+
+/* TARJETA DE SEMANA - Altura uniforme */
+.tarjeta-semana {
+  background: var(--card-bg);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  
+  /* 🔥 ESTO ES LO IMPORTANTE */
+  min-height: 200px; /* Altura mínima fija */
+  height: 100%; /* Ocupa todo el espacio disponible */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye el contenido verticalmente */
+}
+
+/* El contenido de la tarjeta se expande */
+.tarjeta-semana .icon-semana {
+  margin-bottom: auto;
+}
+
+.tarjeta-semana .tarjeta-semana-desc {
+  margin-top: auto;
+  /* Limitar líneas de descripción */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Para las acciones de admin */
+.tarjeta-semana .admin-actions-container {
+  margin-top: auto;
+}
+
+/* Responsive: ajustar columnas */
+@media (max-width: 1100px) {
+  .grid-semanas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-semanas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .grid-semanas {
+    grid-template-columns: 1fr;
+  }
+}
