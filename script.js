@@ -1074,4 +1074,158 @@ iniciarApp();
     });
 
   });
+/* ============================================== */
+/* SOLUCIÓN: TARJETAS DE SEMANAS CON ALTURA UNIFORME */
+/* ============================================== */
 
+/* Grid contenedor de unidades */
+#contenedor-semanas {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Cada unidad tiene su propio grid de tarjetas */
+.grid-semanas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  align-items: stretch; /* IMPORTANTE: estira todas las tarjetas a la misma altura */
+}
+
+/* Tarjeta individual - altura fija y distribución flexible */
+.tarjeta-semana {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  
+  /* ALTURA MÍNIMA UNIFORME */
+  min-height: 220px;
+  
+  /* Distribución vertical */
+  height: 100%;
+}
+
+/* Contenedor del icono - altura fija */
+.tarjeta-semana .icon-semana {
+  display: block;
+  font-size: 2.2em;
+  margin-bottom: 0.5em;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+/* Contenedor del título - altura fija para 2 líneas */
+.tarjeta-semana-title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-title);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  
+  /* Soporte para máximo 2 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  min-height: 2.6rem; /* 2 líneas * line-height */
+}
+
+/* Contenedor de la descripción - crece flexiblemente */
+.tarjeta-semana-desc {
+  font-size: 0.85rem;
+  color: var(--text-main);
+  line-height: 1.4;
+  
+  /* Soporte para máximo 3 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  /* Ocupa el espacio disponible para mantener uniformidad */
+  flex: 1;
+  margin-bottom: 0.75rem;
+}
+
+/* Contenedor de acciones de admin - siempre al final */
+.tarjeta-semana .admin-actions-container {
+  margin-top: auto; /* Empuja las acciones hacia abajo */
+  padding-top: 0.75rem;
+}
+
+.tarjeta-semana .admin-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Botones dentro de tarjetas - tamaño compacto */
+.tarjeta-semana .admin-btn {
+  background: rgba(0, 0, 0, 0.4);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: auto;
+}
+
+.tarjeta-semana .admin-btn .btn-texto {
+  font-size: 11px;
+}
+
+/* ============================================== */
+/* AJUSTES RESPONSIVE */
+/* ============================================== */
+
+@media (max-width: 768px) {
+  .tarjeta-semana {
+    min-height: 200px;
+    padding: 1rem;
+  }
+  
+  .tarjeta-semana-title {
+    font-size: 0.95rem;
+    min-height: 2.4rem;
+  }
+  
+  .tarjeta-semana-desc {
+    font-size: 0.8rem;
+    -webkit-line-clamp: 2;
+  }
+  
+  .tarjeta-semana .admin-btn {
+    padding: 3px 8px;
+    font-size: 10px;
+  }
+  
+  .tarjeta-semana .admin-btn .btn-texto {
+    display: none; /* Ocultar texto en móvil, solo iconos */
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-semanas {
+    grid-template-columns: 1fr; /* Una columna en móvil muy pequeño */
+  }
+}
