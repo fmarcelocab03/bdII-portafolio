@@ -1286,3 +1286,23 @@ footer { margin-left: var(--sidebar-width); padding: 1.5rem; background: var(--f
     grid-template-columns: 1fr;
   }
 }
+/* ============================================== */
+/* SCROLL SUAVE Y COMPENSACIÓN DEL HEADER STICKY  */
+/* ============================================== */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px; /* Compensa la altura del header sticky */
+}
+
+/* Asegura que los elementos con ID sean visibles al hacer scroll */
+#info-title,
+#semanas-title {
+  scroll-margin-top: 120px; /* Margen extra para que no quede tapado por el header */
+}
+
+/* Si quieres que el sidebar también tenga scroll suave */
+#sidebar nav a {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
