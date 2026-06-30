@@ -878,7 +878,11 @@ iniciarApp();
     5: "https://drive.google.com/drive/folders/1xuX-lcrToGyszMA4N04bO9_0GXkvrClR?usp=sharing",
     6: "https://drive.google.com/drive/folders/1LHyawtNi9mkUCKl7s7Bt7V7WDTZPHfNb?usp=sharing",
     7: "https://drive.google.com/drive/folders/1capsmpXbMQCT5SUu7A9EMeYH5whoF6Mv?usp=sharing",
-    8: "https://drive.google.com/drive/folders/1Mht-JFngCHfQ1CPN9pSYiJwTyxNFMNCA?usp=sharing"
+    8: "https://drive.google.com/drive/folders/1Mht-JFngCHfQ1CPN9pSYiJwTyxNFMNCA?usp=sharing",
+    9: "https://drive.google.com/drive/folders/1NPxWXXk6BeKSULa42GQaK8oPeV9tPxPo?usp=sharing",
+    10: "https://drive.google.com/drive/folders/156pXLIvqbeRCcjiU0l4J5Jsb2wq55Skw?usp=sharing",
+    11: "https://drive.google.com/drive/folders/1aE3NPe6KSed3UHUHze0kaaNaI06Qa06i?usp=sharing",
+    12: "https://drive.google.com/drive/folders/1-MEhotFgLNzAWfHpZTJq8fTeWM5Yb1Hk?usp=sharing"
 };
 
   // Obtener el link correspondiente o usar un link por defecto
