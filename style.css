@@ -203,6 +203,8 @@ main h2 { text-align: center; color: var(--text-title); font-size: 1.8rem; text-
   backdrop-filter: blur(8px);
   position: relative;
   overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 800px;
 }
 /* Efecto de línea de escaneo superior en las tarjetas */
 .tarjeta-semana::before {
