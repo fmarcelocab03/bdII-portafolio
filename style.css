@@ -1306,3 +1306,116 @@ html {
   transition: all 0.3s ease;
   cursor: pointer;
 }
+/* ============================================== */
+/* BOT DE FAQ - ESQUINA INFERIOR IZQUIERDA        */
+/* ============================================== */
+
+#faq-bot {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  font-family: var(--font-base);
+}
+
+.faq-bot-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0ea5e9, #7e22ce);
+  color: white;
+  font-size: 28px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+}
+.faq-bot-button:hover {
+  transform: scale(1.1);
+}
+
+.faq-panel {
+  display: none;
+  position: absolute;
+  bottom: 70px;
+  left: 0;
+  width: 320px;
+  max-height: 400px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--border-blue);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  overflow: hidden;
+  flex-direction: column;
+}
+.faq-panel.abierto {
+  display: flex;
+}
+
+.faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(56, 189, 248, 0.15);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--text-title);
+  font-weight: 600;
+}
+.faq-close {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.faq-questions {
+  overflow-y: auto;
+  max-height: 300px;
+  padding: 8px;
+}
+.faq-question-item {
+  padding: 10px 12px;
+  margin: 4px 0;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: var(--text-main);
+  border: 1px solid transparent;
+}
+.faq-question-item:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: var(--border-blue);
+}
+
+.faq-answer {
+  padding: 16px;
+}
+.faq-back-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--border-gray);
+  color: var(--text-accent);
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+#faq-answer-text {
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* Para que no se solape con el panel admin en móvil */
+@media (max-width: 768px) {
+  #faq-bot {
+    left: 10px;
+    bottom: 10px;
+  }
+}
