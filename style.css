@@ -1325,8 +1325,8 @@ html {
 .faq-bot-button {
   border: 2px solid rgba(56, 189, 248, 0.6);
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), 0 4px 15px rgba(0,0,0,0.5);
-  width: 80px;                    /* Aumentado de 60px a 80px (o el tamaño que quieras) */
-  height: 80px;
+  width: 200px;                    /* Aumentado de 60px a 80px (o el tamaño que quieras) */
+  height: 200px;
   border-radius: 50%;
   background: transparent;        /* Sin fondo de color, solo la imagen */
   cursor: pointer;
