@@ -1323,22 +1323,23 @@ html {
 }
 
 .faq-bot-button {
-  width: 60px;
-  height: 60px;
+  border: 2px solid rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), 0 4px 15px rgba(0,0,0,0.5);
+  width: 80px;                    /* Aumentado de 60px a 80px (o el tamaño que quieras) */
+  height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #0ea5e9, #7e22ce);
-  color: white;
-  font-size: 28px;
-  border: none;
+  background: transparent;        /* Sin fondo de color, solo la imagen */
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.3s;
+  padding: 0;
+  overflow: hidden;
 }
+
 .faq-bot-button:hover {
-  transform: scale(1.1);
+  transform: scale(1.1);          /* Efecto hover conservado */
 }
 
 .faq-panel {
@@ -1429,12 +1430,6 @@ html {
   border-color: var(--border-blue);
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
   outline: none;
-}
-.faq-bot-button {
-  background: transparent;
-  /* Elimina el padding si quieres que la imagen ocupe todo el botón */
-  padding: 0;
-  overflow: hidden; /* para que la imagen respete el border-radius */
 }
 
 .faq-bot-icon {
