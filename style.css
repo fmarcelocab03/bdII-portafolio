@@ -57,20 +57,14 @@ body {
 /* EL DEGRADADO DE VARIOS COLORES (Efecto Aurora) */
 body::before {
   content: "";
-  position: fixed; /* Fijo en la pantalla */
+  position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  z-index: -1; /* Detrás de todo el contenido */
-  
-  /* Creación de manchas de color difuminadas (Mesh Gradient) */
+  z-index: -2; /* un nivel más abajo que el canvas (-1) */
   background-image: 
-    radial-gradient(at 10% 10%, rgba(14, 165, 233, 0.15) 0px, transparent 50%), /* Azul tics */
-    radial-gradient(at 90% 90%, rgba(126, 34, 206, 0.15) 0px, transparent 50%), /* Púrpura */
-    radial-gradient(at 50% 50%, rgba(20, 184, 166, 0.1) 0px, transparent 50%);  /* Turquesa */
-    
-  /* Desenfoque extra para suavizar los bordes */
-  filter: blur(80px); 
-  
-  /* Animación suave */
+    radial-gradient(at 10% 10%, rgba(14, 165, 233, 0.15) 0px, transparent 50%),
+    radial-gradient(at 90% 90%, rgba(126, 34, 206, 0.15) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(20, 184, 166, 0.1) 0px, transparent 50%);
+  filter: blur(80px);
   animation: aurora-animation 20s ease infinite alternate;
 }
 /* Animación para mover suavemente las manchas de color */
