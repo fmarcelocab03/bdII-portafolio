@@ -1127,7 +1127,7 @@ faqClose.addEventListener('click', () => {
 
 // Cerrar al hacer clic fuera (opcional)
 document.addEventListener('click', (e) => {
-  if (!faqPanel.contains(e.target) && e.target !== faqToggle) {
+  if (!faqPanel.contains(e.target) && !faqToggle.contains(e.target)) {
     faqPanel.classList.remove('abierto');
   }
 });
