@@ -1,5 +1,9 @@
 :root {
   --sidebar-width: 220px;
+  /* ... otras variables ... */
+  --color-aurora-3: #14b8a6;
+  --border-neon: #38bdf8;
+  --glow-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
   /* Nuevos fondos oscuros con transparencia para dejar ver el degradado detrás */
   --header-bg: rgba(11, 19, 32, 0.8);
   --sidebar-bg: rgba(2, 6, 23, 0.9);
