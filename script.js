@@ -20,7 +20,10 @@ let esAdmin = false;
     if (localStorage.getItem("admin") === "true") {
   esAdmin = true;
   mostrarAdmin();
-  mostrarLogout(); // 👈 🔥 IMPORTANTE
+  mostrarLogout();
+} else {
+  // Invitado: mostrar bot FAQ
+  controlarBotFAQ();
 }
   async function cargarDatos() {
 
@@ -575,17 +578,13 @@ window.loginAdmin = function () {
 
   if (user === "admin" && pass === "1234") {
     esAdmin = true;
-
-    localStorage.setItem("admin", "true"); // 🔥 importante
-
-    alert("Bienvenido Admin 🔥");
-
+    localStorage.setItem("admin", "true");
+    alert("Bienvenido Fernando, Marcelo Caballero 🔥");
     cerrarModalAdmin();
     mostrarAdmin();
-    mostrarLogout(); // 👈 🔥 AQUÍ
-
+    mostrarLogout();
     cargarDatos();
-
+    controlarBotFAQ(); // 👈 AÑADE ESTA LÍNEA
   } else {
     alert("Credenciales incorrectas ❌");
   }
@@ -599,11 +598,10 @@ window.cerrarModalAdmin = function () {
 window.logoutAdmin = function () {
   esAdmin = false;
   localStorage.removeItem("admin");
-
   ocultarAdmin();
-  ocultarLogout(); // 👈 🔥 AQUÍ
-
+  ocultarLogout();
   cargarDatos();
+  controlarBotFAQ(); // 👈 AÑADE ESTA LÍNEA
 };
 window.editarSemana = async function (id) {
   const nuevoNombre = prompt("Nuevo nombre:");
@@ -1229,13 +1227,5 @@ function controlarBotFAQ() {
     cargarPreguntasFAQ(); // cargar la lista al mostrar
   }
 }
-    window.loginAdmin = function () {
-  // ... tu código existente
-  controlarBotFAQ(); // después de mostrarAdmin()
-};
 
-window.logoutAdmin = function () {
-  // ... tu código existente
-  controlarBotFAQ(); // después de ocultarAdmin()
-};
   });
