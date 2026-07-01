@@ -1415,7 +1415,21 @@ html {
   color: var(--text-main);
   line-height: 1.6;
 }
-
+#faq_respuesta {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  width: 100%;
+  resize: vertical;
+  font-family: var(--font-base);
+}
+#faq_respuesta:focus {
+  border-color: var(--border-blue);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+  outline: none;
+}
 /* Para que no se solape con el panel admin en móvil */
 @media (max-width: 768px) {
   #faq-bot {
