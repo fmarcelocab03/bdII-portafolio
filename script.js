@@ -223,7 +223,14 @@ divUnidad.appendChild(tituloContainer);
     async function iniciarApp() {
     await cargarDatos();
   }
-
+// FAQ Bot
+const faqToggle = document.getElementById('faq-toggle');
+const faqPanel = document.getElementById('faq-panel');
+const faqClose = faqPanel.querySelector('.faq-close');
+const faqQuestionsContainer = document.getElementById('faq-questions');
+const faqAnswerContainer = document.getElementById('faq-answer');
+const faqAnswerText = document.getElementById('faq-answer-text');
+const faqBackBtn = document.getElementById('faq-back');
     // Función para colapsar/expandir el panel admin
 window.toggleAdminCollapse = function() {
   const panel = document.getElementById('admin-panel');
@@ -1079,5 +1086,156 @@ iniciarApp();
     modal.addEventListener("mousedown", function (e) {
       if (e.target === modal) e.preventDefault();
     });
+    async function cargarPreguntasFAQ() {
+  const { data, error } = await supabaseClient
+    .from('faq')
+    .select('*')
+    .order('id', { ascending: true });
 
+  if (error) {
+    console.error('Error cargando FAQ:', error);
+    return;
+  }
+
+  faqQuestionsContainer.innerHTML = '';
+  if (data && data.length > 0) {
+    data.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'faq-question-item';
+      div.textContent = item.pregunta;
+      div.addEventListener('click', () => mostrarRespuestaFAQ(item));
+      faqQuestionsContainer.appendChild(div);
+    });
+  } else {
+    faqQuestionsContainer.innerHTML = '<p style="color:gray; padding:12px;">No hay preguntas aún.</p>';
+  }
+}
+    function mostrarRespuestaFAQ(item) {
+  faqQuestionsContainer.style.display = 'none';
+  faqAnswerContainer.style.display = 'block';
+  faqAnswerText.textContent = item.respuesta;
+}
+    faqBackBtn.addEventListener('click', () => {
+  faqAnswerContainer.style.display = 'none';
+  faqQuestionsContainer.style.display = 'block';
+});
+    faqToggle.addEventListener('click', () => {
+  faqPanel.classList.toggle('abierto');
+});
+
+faqClose.addEventListener('click', () => {
+  faqPanel.classList.remove('abierto');
+});
+
+// Cerrar al hacer clic fuera (opcional)
+document.addEventListener('click', (e) => {
+  if (!faqPanel.contains(e.target) && e.target !== faqToggle) {
+    faqPanel.classList.remove('abierto');
+  }
+});
+    window.crearPreguntaFAQ = async function() {
+  const pregunta = document.getElementById('faq_pregunta').value.trim();
+  const respuesta = document.getElementById('faq_respuesta').value.trim();
+  if (!pregunta || !respuesta) return alert('Completa ambos campos');
+  
+  const { error } = await supabaseClient
+    .from('faq')
+    .insert([{ pregunta, respuesta }]);
+  
+  if (error) alert('Error: ' + error.message);
+  else {
+    alert('Pregunta agregada ✅');
+    document.getElementById('faq_pregunta').value = '';
+    document.getElementById('faq_respuesta').value = '';
+    cargarListaFAQAdmin();
+    cargarPreguntasFAQ(); // actualizar el bot para invitados
+  }
+};
+
+window.editarPreguntaFAQ = async function(id, preguntaActual, respuestaActual) {
+  const nuevaPregunta = prompt('Editar pregunta:', preguntaActual);
+  if (nuevaPregunta === null) return;
+  const nuevaRespuesta = prompt('Editar respuesta:', respuestaActual);
+  if (nuevaRespuesta === null) return;
+  
+  const { error } = await supabaseClient
+    .from('faq')
+    .update({ pregunta: nuevaPregunta, respuesta: nuevaRespuesta })
+    .eq('id', id);
+  
+  if (error) alert('Error: ' + error.message);
+  else {
+    alert('Actualizado ✅');
+    cargarListaFAQAdmin();
+    cargarPreguntasFAQ();
+  }
+};
+
+window.eliminarPreguntaFAQ = async function(id) {
+  if (!confirm('¿Eliminar esta pregunta?')) return;
+  const { error } = await supabaseClient
+    .from('faq')
+    .delete()
+    .eq('id', id);
+  
+  if (error) alert('Error: ' + error.message);
+  else {
+    alert('Eliminado ✅');
+    cargarListaFAQAdmin();
+    cargarPreguntasFAQ();
+  }
+};
+
+async function cargarListaFAQAdmin() {
+  const { data, error } = await supabaseClient
+    .from('faq')
+    .select('*')
+    .order('id');
+    
+  const listaDiv = document.getElementById('faq-lista');
+  if (error) {
+    listaDiv.innerHTML = 'Error al cargar';
+    return;
+  }
+  
+  listaDiv.innerHTML = data.map(item => `
+    <div style="background:rgba(255,255,255,0.05); padding:10px; margin:5px 0; border-radius:8px;">
+      <strong>${item.pregunta}</strong><br>
+      <small style="color:#cbd5e1;">${item.respuesta}</small>
+      <div style="margin-top:5px;">
+        <button onclick="editarPreguntaFAQ(${item.id}, '${item.pregunta.replace(/'/g, "\\'")}', '${item.respuesta.replace(/'/g, "\\'")}')" class="admin-btn editar-btn" style="padding:4px 8px;">✏️</button>
+        <button onclick="eliminarPreguntaFAQ(${item.id})" class="admin-btn eliminar-btn" style="padding:4px 8px;">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Cargar la lista al iniciar el panel admin
+// Llama a cargarListaFAQAdmin() cuando se muestre el panel (dentro de mostrarAdmin() quizás)
+    function mostrarAdmin() {
+  const panel = document.getElementById('admin-panel');
+  panel.style.display = 'block';
+  panel.classList.remove('collapsed');
+  document.getElementById('admin-toggle-icon').textContent = '▼';
+  cargarListaFAQAdmin(); // añade esto
+}
+    
+function controlarBotFAQ() {
+  const bot = document.getElementById('faq-bot');
+  if (esAdmin) {
+    bot.style.display = 'none';
+  } else {
+    bot.style.display = 'block';
+    cargarPreguntasFAQ(); // cargar la lista al mostrar
+  }
+}
+    window.loginAdmin = function () {
+  // ... tu código existente
+  controlarBotFAQ(); // después de mostrarAdmin()
+};
+
+window.logoutAdmin = function () {
+  // ... tu código existente
+  controlarBotFAQ(); // después de ocultarAdmin()
+};
   });
