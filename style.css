@@ -213,8 +213,14 @@ main h2 { text-align: center; color: var(--text-title); font-size: 1.8rem; text-
 }
 .tarjeta-semana:hover {
   transform: translateY(-5px);
-  border-color: rgba(0, 240, 255, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), var(--glow-shadow);
+  border-color: rgba(56, 189, 248, 0.8);
+  box-shadow: 
+    0 0 20px rgba(56, 189, 248, 0.7),
+    0 0 40px rgba(56, 189, 248, 0.3),
+    0 15px 40px rgba(0, 0, 0, 0.8);
+}
+.tarjeta-semana:hover::before {
+  background: linear-gradient(90deg, transparent, #38bdf8, #7e22ce, transparent);
 }
 .icon-semana { color: var(--border-blue);font-size: 2.2em; margin-bottom: 0.5em; display: block; filter: grayscale(20%) drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
 .tarjeta-semana-title { font-family: var(--font-title); font-weight: 700; font-size: 1.2rem; color: var(--text-title); text-transform: uppercase; margin-bottom: 0.5rem;}
