@@ -1430,6 +1430,19 @@ html {
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
   outline: none;
 }
+.faq-bot-button {
+  background: transparent;
+  /* Elimina el padding si quieres que la imagen ocupe todo el botón */
+  padding: 0;
+  overflow: hidden; /* para que la imagen respete el border-radius */
+}
+
+.faq-bot-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* o "contain" si prefieres verla completa sin recortar */
+  border-radius: 50%; /* mantiene la forma circular del botón */
+}
 /* Para que no se solape con el panel admin en móvil */
 @media (max-width: 768px) {
   #faq-bot {
