@@ -232,6 +232,12 @@ divUnidad.appendChild(tituloContainer);
     divUnidad.appendChild(grid);
     contenedor.appendChild(divUnidad);
   });
+      VanillaTilt.init(document.querySelectorAll(".tarjeta-semana"), {
+  max: 10,        // inclinación máxima (grados)
+  speed: 400,     // velocidad de transición
+  glare: true,    // brillo de vidrio
+  "max-glare": 0.3
+});
 }
     function actualizarTarjetasSemanas() {
       contenedor.innerHTML = "";
