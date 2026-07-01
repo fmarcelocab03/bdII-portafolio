@@ -147,7 +147,20 @@
     </div>
 
     <hr>
-
+<hr>
+<div class="admin-seccion">
+  <h4>🤖 Gestión de Preguntas Frecuentes</h4>
+  <div class="input-grupo">
+    <label>Pregunta:</label>
+    <input type="text" id="faq_pregunta" placeholder="Ej: ¿Cómo subo una tarea?">
+  </div>
+  <div class="input-grupo">
+    <label>Respuesta:</label>
+    <textarea id="faq_respuesta" rows="3" placeholder="Escribe la respuesta..."></textarea>
+  </div>
+  <button onclick="crearPreguntaFAQ()" class="admin-btn-primary">✨ Agregar Pregunta</button>
+  <div id="faq-lista" style="margin-top:15px;"></div>
+</div>
     <!-- INFORMACIÓN DE ESTRUCTURA -->
     <div class="admin-seccion info-estructura">
       <h4>📋 Estructura del Curso</h4>
@@ -179,5 +192,22 @@
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
   </script>
+  <!-- BOT FAQ (solo invitados) -->
+<div id="faq-bot" style="display:none;">
+  <button id="faq-toggle" class="faq-bot-button">💬</button>
+  <div id="faq-panel" class="faq-panel">
+    <div class="faq-header">
+      <span>🤖 Preguntas frecuentes</span>
+      <button class="faq-close">&times;</button>
+    </div>
+    <div id="faq-questions" class="faq-questions">
+      <!-- Las preguntas se cargarán aquí -->
+    </div>
+    <div id="faq-answer" class="faq-answer" style="display:none;">
+      <button id="faq-back" class="faq-back-btn">← Volver</button>
+      <div id="faq-answer-text"></div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
