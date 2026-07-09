@@ -33,6 +33,28 @@ let esAdmin = false;
   },
   "retina_detect": true
 });
+    // --- Toggle de tema claro/oscuro ---
+const themeToggle = document.getElementById('theme-toggle');
+const currentTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', currentTheme);
+if (currentTheme === 'light') {
+  themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+} else {
+  themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+}
+
+themeToggle.addEventListener('click', () => {
+  let theme = document.documentElement.getAttribute('data-theme');
+  if (theme === 'dark') {
+    theme = 'light';
+    themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+  } else {
+    theme = 'dark';
+    themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+});
     ocultarAdmin();
     const GITHUB_REPO_URL = "https://github.com/fmarcelocab03/bdII-portafolio/tree/main/archivos";
     
