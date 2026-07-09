@@ -197,7 +197,7 @@ card.innerHTML = `
     const btnEditar = document.createElement('button');
     btnEditar.className = 'admin-btn editar-btn';
     btnEditar.title = 'Editar semana';
-    btnEditar.innerHTML = '✏️ <span class="btn-texto">Editar</span>';
+    btnEditar.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> <span class="btn-texto">Editar</span>';
     btnEditar.addEventListener('click', function(e) {
       e.stopPropagation();
       editarSemana(semana.id);
@@ -206,7 +206,7 @@ card.innerHTML = `
     const btnEliminar = document.createElement('button');
     btnEliminar.className = 'admin-btn eliminar-btn';
     btnEliminar.title = 'Eliminar semana';
-    btnEliminar.innerHTML = '🗑️ <span class="btn-texto">Eliminar</span>';
+    btnEliminar.innerHTML = '<i class="fa-solid fa-trash-can"></i> <span class="btn-texto">Eliminar</span>';
     btnEliminar.addEventListener('click', function(e) {
       e.stopPropagation();
       eliminarSemana(semana.id);
