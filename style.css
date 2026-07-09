@@ -222,11 +222,15 @@ main h2 { text-align: center; color: var(--text-title); font-size: 1.8rem; text-
 .tarjeta-semana:hover::before {
   background: linear-gradient(90deg, transparent, #38bdf8, #7e22ce, transparent);
 }
-.icon-semana { 
+.icon-semana i {
+  font-size: inherit;        /* Hereda el tamaño del contenedor padre */
   color: var(--border-blue);
-  font-size: 2.2em; margin-bottom: 
-  0.5em; display: block; 
-  filter: grayscale(20%) drop-shadow(0 0 5px rgba(255,255,255,0.2));
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+  transition: transform 0.5s ease;
+  display: block;
+}
+.tarjeta-semana:hover .icon-semana i {
+  transform: rotateY(180deg);
 }
 .tarjeta-semana-title { font-family: var(--font-title); font-weight: 700; font-size: 1.2rem; color: var(--text-title); text-transform: uppercase; margin-bottom: 0.5rem;}
 .tarjeta-semana-desc { font-size: 0.9rem; color: var(--text-main); }
