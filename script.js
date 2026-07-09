@@ -180,12 +180,12 @@ divUnidad.appendChild(tituloContainer);
   const card = document.createElement("div");
   card.className = "tarjeta-semana";
 
-  card.innerHTML = `
-    <span class="icon-semana">📅</span>
-    <div class="tarjeta-semana-title">${semana.label}</div>
-    <div class="tarjeta-semana-desc">${semana.descripcion}</div>
-    <div class="admin-actions-container"></div>
-  `;
+card.innerHTML = `
+  <span class="icon-semana"><i class="fa-solid fa-calendar-week"></i></span>
+  <div class="tarjeta-semana-title">${semana.label}</div>
+  <div class="tarjeta-semana-desc">${semana.descripcion}</div>
+  <div class="admin-actions-container"></div>
+`;
 
   // Si es admin, agregamos los botones después
   if (esAdmin) {
