@@ -163,7 +163,10 @@ button:hover {
   box-shadow: var(--glow-shadow);
 }
 /* Admin button in header */
-#admin-btn { border-color: #f59e0b; color: #f59e0b; }
+#admin-btn { 
+  border-color: #f59e0b; color: #f59e0b;
+  
+}
 #admin-btn:hover { background: #f59e0b; color: #000; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
 /* Main */
 main { margin-left: var(--sidebar-width); min-height: 70vh; padding: 2rem 1.5rem; }
@@ -783,6 +786,12 @@ footer { margin-left: var(--sidebar-width); padding: 1.5rem; background: var(--f
   }
 }
 /* Para el texto dentro de los botones (✏️ y 🗑️) */
+.admin-btn i {
+  transition: transform 0.3s ease;
+}
+.admin-btn:hover i {
+  transform: scale(1.2) rotate(15deg);
+}
 .tarjeta-semana .admin-btn .btn-texto {
   margin-left: 6px;
   font-size: 13px;
