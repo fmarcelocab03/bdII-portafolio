@@ -52,6 +52,10 @@
   --footer-bg: rgba(255, 255, 255, 0.95);
   --glow-shadow: 0 0 15px rgba(2, 132, 199, 0.3);
 }
+[data-theme="light"] .abrir-github-btn {
+  background: #e2e8f0;
+  color: #1e293b;
+}
 /* Reset / base */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
