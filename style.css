@@ -1525,6 +1525,23 @@ html {
   background: var(--text-accent);
   color: var(--main-bg);
 }
+/* ============================================== */
+/* VIDRIO ESMERILADO MEJORADO                     */
+/* ============================================== */
+
+/* Panel de admin, modal de login, visor del modal, info del estudiante y tarjetas de semana */
+#admin-panel,
+#admin-login-modal > div,
+.modal-content,
+.info-estudiante,
+.tarjeta-semana {
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Ajuste específico para las tarjetas de semana si quieres un blur un poco menor */
+
 /* Para que no se solape con el panel admin en móvil */
 @media (max-width: 768px) {
   #faq-bot {
