@@ -179,6 +179,29 @@ main { margin-left: var(--sidebar-width); min-height: 70vh; padding: 2rem 1.5rem
   border-radius: var(--radius);
   max-width: 700px; margin: 0 auto 2.5rem; padding: 1.5rem;
   backdrop-filter: blur(5px);
+  /* Animación para el icono de información del estudiante */
+.info-icon i {
+  color: var(--border-blue);
+  font-size: 1.8rem;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+  animation: float-icon 2s ease-in-out infinite, glow-pulse 2s ease-in-out infinite;
+  transition: transform 0.3s;
+}
+
+@keyframes float-icon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(56, 189, 248, 0.7); }
+  50% { text-shadow: 0 0 20px rgba(56, 189, 248, 1), 0 0 30px rgba(56, 189, 248, 0.5); }
+}
+
+/* Opcional: efecto hover */
+.info-icon i:hover {
+  transform: scale(1.2) rotate(10deg);
+}
 }
 .info-estudiante h2 { color: var(--text-title); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
 .info-estudiante ul { list-style: none; padding: 0; margin: 0; font-family: var(--font-mono); font-size: 0.9rem; }
