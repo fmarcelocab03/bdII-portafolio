@@ -147,7 +147,7 @@ if (esAdmin) {
   const btnEditarUnidad = document.createElement('button');
   btnEditarUnidad.className = 'unidad-btn editar-unidad-btn';
   btnEditarUnidad.setAttribute('data-tooltip', 'Editar nombre de la unidad');
-  btnEditarUnidad.innerHTML = '<span class="btn-icono">✏️</span> Editar';
+  btnEditarUnidad.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editar';
   btnEditarUnidad.addEventListener('click', function(e) {
     e.stopPropagation();
     editarUnidad(unidad.id);
@@ -157,7 +157,7 @@ if (esAdmin) {
   const btnEliminarUnidad = document.createElement('button');
   btnEliminarUnidad.className = 'unidad-btn eliminar-unidad-btn';
   btnEliminarUnidad.setAttribute('data-tooltip', 'Eliminar unidad completa');
-  btnEliminarUnidad.innerHTML = '<span class="btn-icono">🗑️</span> Eliminar';
+  btnEliminarUnidad.innerHTML = '<i class="fa-solid fa-trash-can"></i> Eliminar';
   btnEliminarUnidad.addEventListener('click', function(e) {
     e.stopPropagation();
     eliminarUnidad(unidad.id);
