@@ -37,7 +37,21 @@
   --color-aurora-2: #7e22ce; /* Púrpura */
   --color-aurora-3: #14b8a6; /* Turquesa */
 }
-
+/* Tema claro */
+[data-theme="light"] {
+  --main-bg: #f8fafc;
+  --header-bg: rgba(255, 255, 255, 0.8);
+  --sidebar-bg: rgba(255, 255, 255, 0.9);
+  --panel-bg: rgba(0, 0, 0, 0.02);
+  --card-bg: rgba(0, 0, 0, 0.02);
+  --border-dark: #cbd5e1;
+  --border-blue: #0284c7;
+  --text-main: #1e293b;
+  --text-accent: #0369a1;
+  --text-title: #0f172a;
+  --footer-bg: rgba(255, 255, 255, 0.95);
+  --glow-shadow: 0 0 15px rgba(2, 132, 199, 0.3);
+}
 /* Reset / base */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -1488,6 +1502,24 @@ html {
   height: 100%;
   object-fit: cover;  /* o "contain" si prefieres verla completa sin recortar */
   border-radius: 50%; /* mantiene la forma circular del botón */
+}
+.theme-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--text-accent);
+  color: var(--text-accent);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-left: 8px;
+}
+.theme-toggle-btn:hover {
+  background: var(--text-accent);
+  color: var(--main-bg);
 }
 /* Para que no se solape con el panel admin en móvil */
 @media (max-width: 768px) {
